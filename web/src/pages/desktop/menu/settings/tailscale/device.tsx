@@ -134,7 +134,8 @@ export const Device = ({ status, onLogout }: DeviceProps) => {
 
       // If it still wants authorization, the user probably didn't authorize it properly
       if (rsp.data && rsp.data.authUrl) {
-        setAuthConsentUrl(''); // Act as a Cancel
+        setAuthConsentUrl('');
+        setErrMsg(t('settings.tailscale.enableHttpsCerts'));
         return;
       }
 
@@ -230,12 +231,13 @@ export const Device = ({ status, onLogout }: DeviceProps) => {
               okText={t('settings.tailscale.okBtn')}
               cancelText={t('settings.tailscale.cancelBtn')}
             >
-              <Switch checked={isHttpsToggleChecked} loading={isHttpsToggleLoading} />
+              <Switch checked={isHttpsToggleChecked} loading={isHttpsToggleLoading} disabled={!isRunning} />
             </Popconfirm>
           ) : (
             <Switch
               checked={isServing || isAwaitingAuth}
               loading={isServingUpdating || isAwaitingAuth}
+              disabled={!isRunning}
               onClick={updateServe}
             />
           )}

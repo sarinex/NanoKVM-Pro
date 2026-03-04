@@ -5,6 +5,7 @@ import (
 	"bufio"
 	"encoding/json"
 	"errors"
+	"fmt"
 	"os/exec"
 	"regexp"
 	"strings"
@@ -183,9 +184,12 @@ func (c *Cli) Serve(enable bool) (string, error) {
 		line, err := reader.ReadString('\n')
 
 		if err != nil {
-			// Fire-and-forget: we've consumed the data we need; let cmd clean up asynchronously
-			go cmd.Wait()
-			log.Debugf("tailscale serve command finished with error (or EOF): %v", err)
+			// EOF reached — check whether the process actually succeeded.
+			if waitErr := cmd.Wait(); waitErr != nil {
+				log.Errorf("tailscale serve command failed: %v", waitErr)
+				return "", fmt.Errorf("tailscale serve failed: %w", waitErr)
+			}
+			// Exit code 0 — command succeeded without needing auth.
 			return "", nil
 		}
 
