@@ -521,6 +521,7 @@ const en = {
           'You will no longer be able to access the Web UI via the Tailscale HTTPS URL.',
         disableHttpsFallback: 'Use one of the following instead:',
         enableHttpsCerts: 'Enable <1>HTTPS certificates</1> on your tailnet to continue',
+        enableHttpsCertsPlain: 'Enable HTTPS certificates on your tailnet to continue',
         authSuccess: 'Authorization Success',
         httpsUrl: 'HTTPS URL',
         okBtn: 'Yes',

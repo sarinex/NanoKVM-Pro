@@ -135,7 +135,7 @@ export const Device = ({ status, onLogout }: DeviceProps) => {
       // If it still wants authorization, the user probably didn't authorize it properly
       if (rsp.data && rsp.data.authUrl) {
         setAuthConsentUrl('');
-        setErrMsg(t('settings.tailscale.enableHttpsCerts'));
+        setErrMsg(t('settings.tailscale.enableHttpsCertsPlain'));
         return;
       }
 
@@ -209,8 +209,8 @@ export const Device = ({ status, onLogout }: DeviceProps) => {
                         <div className="size-[16px] text-neutral-500">
                           {ip.type === 'Wireless' ? <WifiIcon size={16} /> : <EthernetPortIcon size={16} />}
                         </div>
-                        <a href={`https://${ip.addr}`} target="_blank" rel="noreferrer" className="text-blue-500 hover:underline">
-                          https://{ip.addr}
+                        <a href={`http://${ip.addr}`} target="_blank" rel="noreferrer" className="text-blue-500 hover:underline">
+                          http://{ip.addr}
                         </a>
                       </div>
                     ))}
@@ -218,8 +218,8 @@ export const Device = ({ status, onLogout }: DeviceProps) => {
                       <div className="size-[16px] flex items-center justify-center">
                         <Tailscale />
                       </div>
-                      <a href={`https://${status.ip}`} target="_blank" rel="noreferrer" className="text-blue-500 hover:underline">
-                        https://{status.ip}
+                      <a href={`http://${status.ip}`} target="_blank" rel="noreferrer" className="text-blue-500 hover:underline">
+                        http://{status.ip}
                       </a>
                     </div>
                   </div>
