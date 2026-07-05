@@ -15,6 +15,7 @@ import (
 	"NanoKVM-Server/middleware"
 	"NanoKVM-Server/router"
 	"NanoKVM-Server/service/vm/jiggler"
+	"NanoKVM-Server/service/vm"
 
 	"github.com/gin-gonic/gin"
 	cors "github.com/rs/cors/wrapper/gin"
@@ -32,6 +33,11 @@ func initialize() {
 
 	// init screen parameters
 	_ = common.GetScreen()
+
+	// restore HDMI capture/passthrough settings
+	if err := vm.RestoreHdmiState(); err != nil {
+		log.Printf("Failed to restore HDMI capture/passthrough settings: %v", err)
+	}
 
 	// run mouse jiggler
 	jiggler.GetJiggler().Run()
